@@ -64,7 +64,7 @@ your_app/
 │               ├── onload.ts
 │               ├── refresh.ts
 │               └── ...
-├── tsconfig.base.json
+├── tsconfig.json
 └── package.json
 ```
 
