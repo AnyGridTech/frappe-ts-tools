@@ -1,0 +1,39 @@
+{
+  "name": "@anygridtech/frappe-ts-tools",
+  "version": "1.0.0",
+  "description": "Build tools for Frappe DocTypes with TypeScript",
+  "main": "lib/index.js",
+  "bin": {
+    "frappe-build": "./bin/frappe-build.js",
+    "frappe-watch": "./bin/frappe-watch.js",
+    "frappe-typecheck": "./bin/frappe-typecheck.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "frappe",
+    "typescript",
+    "build",
+    "esbuild",
+    "doctype"
+  ],
+  "author": "AnyGridTech",
+  "license": "MIT",
+  "dependencies": {
+    "esbuild": "^0.25.11"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anygridtech/frappe-ts-tools.git"
+  }
+}
