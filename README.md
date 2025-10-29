@@ -19,7 +19,7 @@ npm install --save-dev @anygridtech/frappe-ts-tools typescript
 
 ## Configuration
 
-You need a `tsconfig.json` file in your app's root directory (or in the module directory with the `public/` folder). Here's a recommended configuration:
+You need a `tsconfig.json` file in your module's root directory (or in the directory with the `public/` folder). Here's a recommended configuration:
 
 ```json
 {
