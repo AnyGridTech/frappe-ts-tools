@@ -1,6 +1,6 @@
 {
   "name": "@anygridtech/frappe-ts-tools",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Build tools for Frappe DocTypes with TypeScript",
   "main": "lib/index.js",
   "bin": {
