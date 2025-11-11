@@ -1,8 +1,13 @@
 #!/usr/bin/env node
-const { findDoctypesWithTS, buildDoctype, startTypeChecker, cleanup, findPublicTSFolders, buildPublicTS } = require('../lib');
+const { findDoctypesWithTS, buildDoctype, startTypeChecker, cleanup, findPublicTSFolders, buildPublicTS, bundlePublicTS, cleanupPublicBundles } = require('../lib');
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+const withTypeCheck = args.includes('--typecheck');
+const useBundle = args.includes('--bundle');
+const bundleName = args.find(arg => arg.startsWith('--bundle-name='))?.split('=')[1] || 'app';
 
 const baseDir = process.cwd();
-const withTypeCheck = process.argv.includes('--typecheck');
 const doctypes = findDoctypesWithTS(baseDir);
 const publicFolders = findPublicTSFolders(baseDir);
 
@@ -41,8 +46,15 @@ doctypes.forEach(dt => {
 
 // Start watching each public folder
 publicFolders.forEach(pf => {
-  const procs = buildPublicTS(pf, true);
-  if (procs) watchProcs.push(...procs);
+  let proc;
+  if (useBundle) {
+    // Bundle mode: single file output
+    proc = bundlePublicTS(pf, true, { bundleName });
+  } else {
+    // Default mode: individual file outputs
+    proc = buildPublicTS(pf, true);
+  }
+  if (proc) watchProcs.push(proc);
 });
 
 console.log('\n👀 Watching for changes... (Press Ctrl+C to stop)');
@@ -50,6 +62,7 @@ console.log('\n👀 Watching for changes... (Press Ctrl+C to stop)');
 // Handle Ctrl+C cleanup
 process.on('SIGINT', () => {
   cleanup(doctypes);
+  cleanupPublicBundles(publicFolders);
   
   if (typeCheckerProc) {
     typeCheckerProc.kill();
