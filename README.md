@@ -162,12 +162,14 @@ Each `.ts` file compiles to a corresponding `.js` file in `public/js/` folder **
 
 Example: `public/ts/utils.ts` → `public/js/utils.js`
 
-#### Bundle Mode (Optional)
+#### Bundle Mode (Recommended) ⭐
 All `.ts` files are bundled into a single `{bundleName}.bundle.js` file in `public/js/` folder. This is ideal for:
 - Single application bundle
 - Reduced HTTP requests
 - Better code optimization
 - Simplified dependency management
+
+**Note:** Bundle mode is **recommended for public folders** as it resolves common issues related to the assets folder and custom DocTypes, ensuring proper module resolution and dependency management.
 
 Example: All files → `public/js/app.bundle.js`
 
