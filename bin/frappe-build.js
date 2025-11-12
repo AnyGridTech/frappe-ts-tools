@@ -1,5 +1,10 @@
 #!/usr/bin/env node
-const { findDoctypesWithTS, buildDoctype, findPublicTSFolders, buildPublicTS } = require('../lib');
+const { findDoctypesWithTS, buildDoctype, findPublicTSFolders, buildPublicTS, bundlePublicTS } = require('../lib');
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+const useBundle = args.includes('--bundle');
+const bundleName = args.find(arg => arg.startsWith('--bundle-name='))?.split('=')[1] || 'app';
 
 const baseDir = process.cwd();
 const doctypes = findDoctypesWithTS(baseDir);
@@ -32,8 +37,15 @@ if (publicFolders.length > 0) {
   console.log('');
 
   try {
-    publicFolders.forEach(pf => buildPublicTS(pf, false));
-    console.log('✅ Public TypeScript files built successfully\n');
+    if (useBundle) {
+      // Bundle all public TS files into a single file
+      publicFolders.forEach(pf => bundlePublicTS(pf, false, { bundleName }));
+      console.log('✅ Public TypeScript files bundled successfully\n');
+    } else {
+      // Build each file individually (default behavior)
+      publicFolders.forEach(pf => buildPublicTS(pf, false));
+      console.log('✅ Public TypeScript files built successfully\n');
+    }
   } catch (error) {
     console.error('❌ Build failed:', error.message);
     process.exit(1);
